@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.ParticipantActivity"
+            android:name=".view.ParticipanteActivity"
             android:exported="false" />
     </application>
 
