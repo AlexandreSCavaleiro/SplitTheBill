@@ -115,6 +115,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterForContextMenu(amb.participantelv)
+    }
+
     /*
     private fun fillParticipantes(){
         for (i in 1..5){
