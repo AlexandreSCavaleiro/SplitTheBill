@@ -3,8 +3,12 @@ package br.edu.scl.ifsp.ads.splitthebill.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.scl.ifsp.ads.splitthebill.R
@@ -44,13 +48,46 @@ class MainActivity : AppCompatActivity() {
                 if (result.resultCode == RESULT_OK){
                     val participante =result.data?.getParcelableExtra<Participante>(PARTICIPANTE_EXTRA)
                     participante?.let{_participante ->
-                        participanteList.add(_participante)
 
+                        if (participanteList.any{it.id == participante.id}){
+                            val pos =participanteList.indexOfFirst {it.id == participante.id}
+                            participanteList[pos] = _participante
+                        }else{
+                            participanteList.add(_participante)
+                        }
                         participanteAdapter.notifyDataSetChanged()
                     }
                 }
             }
+        registerForContextMenu(amb.participantelv)
+    }
 
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        menuInflater.inflate(R.menu.context_menu_main,menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val position = (item.menuInfo as AdapterView.AdapterContextMenuInfo).position
+        return when (item.itemId){
+            R.id.removeParticipanteMi -> {
+                participanteList.removeAt(position)
+                participanteAdapter.notifyDataSetChanged()
+                Toast.makeText(this, "Removido com sucesso!", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.editParticipanteMi -> {
+                val participante = participanteList[position]
+                val editPartIntent = Intent(this, ParticipanteActivity::class.java)
+                editPartIntent.putExtra(PARTICIPANTE_EXTRA, participante)
+                carl.launch(editPartIntent)
+                true
+            }
+            else -> {true}
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

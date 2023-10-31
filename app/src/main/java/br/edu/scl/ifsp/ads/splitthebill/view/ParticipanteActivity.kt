@@ -18,10 +18,19 @@ class ParticipanteActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(apb.root)
 
+        val participanteRecebido = intent.getParcelableExtra<Participante>(PARTICIPANTE_EXTRA)
+        participanteRecebido?.let { partRecebido->
+            with(apb){
+                nomeEt.setText(partRecebido.nome)
+                valorGastoEt.setText(partRecebido.valorGasto.toString())
+                itemsCompradosEt.setText(partRecebido.itensComprados)
+            }
+        }
+
         with (apb){
             salvarBt.setOnClickListener{
                 val participante: Participante = Participante(
-                    id = generateId(),
+                    id = participanteRecebido?.id?:generateId(), // se o id n for nulo gera id
                     nome = nomeEt.text.toString(),
                     valorGasto = valorGastoEt.text.toString().toDouble(),
                     itensComprados = itemsCompradosEt.text.toString()
