@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import br.edu.scl.ifsp.ads.splitthebill.R
+import br.edu.scl.ifsp.ads.splitthebill.adapter.ParticipanteAdapter
 import br.edu.scl.ifsp.ads.splitthebill.databinding.ActivityMainBinding
 import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_EXTRA
 import br.edu.scl.ifsp.ads.splitthebill.model.Participante
@@ -26,19 +26,14 @@ class MainActivity : AppCompatActivity() {
     private val participanteList: MutableList<Participante> = mutableListOf()
 
     //adapter
-    private val participanteAdapter: ArrayAdapter<String> by lazy {
-        ArrayAdapter(this,
-            android.R.layout.simple_list_item_1,
-            participanteList.map{participante ->
-                participante.nome
-            }
-        )
+    private val participanteAdapter: ParticipanteAdapter by lazy {
+        ParticipanteAdapter( this, participanteList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(amb.root)
-        fillParticipantes()
+        //fillParticipantes()
 
         setSupportActionBar(amb.toolbarIn.toolbar)
         amb.participantelv.adapter= participanteAdapter
@@ -50,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     val participante =result.data?.getParcelableExtra<Participante>(PARTICIPANTE_EXTRA)
                     participante?.let{_participante ->
                         participanteList.add(_participante)
-                        participanteAdapter.add(_participante.nome)
+
                         participanteAdapter.notifyDataSetChanged()
                     }
                 }
@@ -73,10 +68,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /*
     private fun fillParticipantes(){
         for (i in 1..5){
             participanteList.add(Participante(i,"nome$i","produtos", 2.00))
         }
     }
-
+    */
 }

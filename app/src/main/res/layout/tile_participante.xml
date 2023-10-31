@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="@id/saldoFinalTV"
         android:text="Alexandre"
         android:textSize="25sp"
-        android:paddingStart="20px"
+        android:paddingStart="10dp"
         />
 
     <TextView
@@ -34,6 +34,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="XX,XX"
         android:paddingVertical="5dp"
+        android:paddingEnd="5dp"
         />
 
     <TextView
@@ -54,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/valorTGTV"
         android:text="XX,XX"
         android:paddingVertical="5dp"
+        android:paddingEnd="5dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
