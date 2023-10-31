@@ -15,6 +15,7 @@ import br.edu.scl.ifsp.ads.splitthebill.R
 import br.edu.scl.ifsp.ads.splitthebill.adapter.ParticipanteAdapter
 import br.edu.scl.ifsp.ads.splitthebill.databinding.ActivityMainBinding
 import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_EXTRA
+import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_VIEW
 import br.edu.scl.ifsp.ads.splitthebill.model.Participante
 
 class MainActivity : AppCompatActivity() {
@@ -59,6 +60,15 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
+        amb.participantelv.setOnItemClickListener{ parent,view, position,id->
+            val part = participanteList[position]
+            val viewPartIntent = Intent(this, ParticipanteActivity::class.java)
+            viewPartIntent.putExtra(PARTICIPANTE_EXTRA, part)
+            viewPartIntent.putExtra(PARTICIPANTE_VIEW,true)
+            startActivity(viewPartIntent)
+        }
+
         registerForContextMenu(amb.participantelv)
     }
 

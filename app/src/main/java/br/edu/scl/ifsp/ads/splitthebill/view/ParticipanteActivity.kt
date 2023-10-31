@@ -3,8 +3,10 @@ package br.edu.scl.ifsp.ads.splitthebill.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import br.edu.scl.ifsp.ads.splitthebill.databinding.ActivityParticipanteBinding
 import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_EXTRA
+import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_VIEW
 import br.edu.scl.ifsp.ads.splitthebill.model.Participante
 import kotlin.random.Random
 
@@ -20,7 +22,14 @@ class ParticipanteActivity: AppCompatActivity() {
 
         val participanteRecebido = intent.getParcelableExtra<Participante>(PARTICIPANTE_EXTRA)
         participanteRecebido?.let { partRecebido->
+            val viewParticipante = intent.getBooleanExtra(PARTICIPANTE_VIEW, false)
             with(apb){
+                if (viewParticipante){
+                    nomeEt.isEnabled = false
+                    valorGastoEt.isEnabled = false
+                    itemsCompradosEt.isEnabled = false
+                    salvarBt.isVisible = false
+                }
                 nomeEt.setText(partRecebido.nome)
                 valorGastoEt.setText(partRecebido.valorGasto.toString())
                 itemsCompradosEt.setText(partRecebido.itensComprados)
