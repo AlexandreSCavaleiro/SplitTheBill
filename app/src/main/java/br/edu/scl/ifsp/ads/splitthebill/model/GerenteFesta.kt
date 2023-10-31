@@ -11,6 +11,7 @@ class GerenteFesta {
     }
 
     fun getValorIndividual(): Double{
+        atualizaValores()
         return valorIndividual
     }
 

@@ -24,9 +24,11 @@ class ParticipanteAdapter(context: Context, private val gerenteFesta: GerenteFes
                     LayoutInflater).inflate(R.layout.tile_participante, parent, false)
         }
 
+        var valorAPagar = participante.valorGasto - gerenteFesta.getValorIndividual()
+
         participanteTileView!!.findViewById<TextView>(R.id.nomeTV).setText(participante.nome)
         participanteTileView!!.findViewById<TextView>(R.id.valorTGTV).setText(participante.valorGasto.toString())
-        participanteTileView!!.findViewById<TextView>(R.id.valorSFTV).setText(gerenteFesta.getValorIndividual().toString())
+        participanteTileView!!.findViewById<TextView>(R.id.valorSFTV).setText(valorAPagar.toString())
 
 
         return participanteTileView
