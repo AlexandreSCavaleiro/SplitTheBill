@@ -6,5 +6,5 @@
     android:layout_height="?attr/actionBarSize"
     app:titleTextColor="@color/white"
     app:subtitleTextColor="@color/white"
-    android:background="#004532"
+    android:background="?attr/colorPrimary"
     />
