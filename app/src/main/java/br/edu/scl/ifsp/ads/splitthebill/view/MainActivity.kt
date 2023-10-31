@@ -16,6 +16,7 @@ import br.edu.scl.ifsp.ads.splitthebill.adapter.ParticipanteAdapter
 import br.edu.scl.ifsp.ads.splitthebill.databinding.ActivityMainBinding
 import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_EXTRA
 import br.edu.scl.ifsp.ads.splitthebill.model.Constants.PARTICIPANTE_VIEW
+import br.edu.scl.ifsp.ads.splitthebill.model.GerenteFesta
 import br.edu.scl.ifsp.ads.splitthebill.model.Participante
 
 class MainActivity : AppCompatActivity() {
@@ -28,11 +29,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var carl: ActivityResultLauncher<Intent>
 
     //data source
-    private val participanteList: MutableList<Participante> = mutableListOf()
+    private val gerenteFesta : GerenteFesta by lazy {
+        GerenteFesta()
+    }
 
     //adapter
     private val participanteAdapter: ParticipanteAdapter by lazy {
-        ParticipanteAdapter( this, participanteList)
+        ParticipanteAdapter( this, gerenteFesta)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,19 +53,20 @@ class MainActivity : AppCompatActivity() {
                     val participante =result.data?.getParcelableExtra<Participante>(PARTICIPANTE_EXTRA)
                     participante?.let{_participante ->
 
-                        if (participanteList.any{it.id == participante.id}){
-                            val pos =participanteList.indexOfFirst {it.id == participante.id}
-                            participanteList[pos] = _participante
+                        if (gerenteFesta.participantes.any{it.id == participante.id}){
+                            val pos =gerenteFesta.participantes.indexOfFirst {it.id == participante.id}
+                            gerenteFesta.participantes[pos] = _participante
                         }else{
-                            participanteList.add(_participante)
+                            gerenteFesta.participantes.add(_participante)
                         }
                         participanteAdapter.notifyDataSetChanged()
+                        gerenteFesta.atualizaValores()
                     }
                 }
             }
 
         amb.participantelv.setOnItemClickListener{ parent,view, position,id->
-            val part = participanteList[position]
+            val part = gerenteFesta.participantes[position]
             val viewPartIntent = Intent(this, ParticipanteActivity::class.java)
             viewPartIntent.putExtra(PARTICIPANTE_EXTRA, part)
             viewPartIntent.putExtra(PARTICIPANTE_VIEW,true)
@@ -84,13 +88,13 @@ class MainActivity : AppCompatActivity() {
         val position = (item.menuInfo as AdapterView.AdapterContextMenuInfo).position
         return when (item.itemId){
             R.id.removeParticipanteMi -> {
-                participanteList.removeAt(position)
+                gerenteFesta.participantes.removeAt(position)
                 participanteAdapter.notifyDataSetChanged()
                 Toast.makeText(this, "Removido com sucesso!", Toast.LENGTH_SHORT).show()
                 true
             }
             R.id.editParticipanteMi -> {
-                val participante = participanteList[position]
+                val participante = gerenteFesta.participantes[position]
                 val editPartIntent = Intent(this, ParticipanteActivity::class.java)
                 editPartIntent.putExtra(PARTICIPANTE_EXTRA, participante)
                 carl.launch(editPartIntent)

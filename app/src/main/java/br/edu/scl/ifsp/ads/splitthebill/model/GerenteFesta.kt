@@ -2,7 +2,7 @@ package br.edu.scl.ifsp.ads.splitthebill.model
 
 class GerenteFesta {
 
-    val participantes: MutableList<Participante> = mutableListOf()
+    var participantes: MutableList<Participante> = mutableListOf()
     private var valorTotalFesta: Double = 0.0
     private var valorIndividual: Double = 0.0
 
@@ -14,7 +14,11 @@ class GerenteFesta {
         return valorIndividual
     }
 
-    private fun atualizaValores() {
+    fun getLista(): MutableList<Participante> {
+        return participantes
+    }
+
+    fun atualizaValores() {
         valorTotalFesta = 0.0
         for (participante in participantes){ //percorre a lista e faz a soma total
             valorTotalFesta+= participante.valorGasto
@@ -26,4 +30,5 @@ class GerenteFesta {
         participantes.add(part)
         atualizaValores()
     }
+
 }
