@@ -25,10 +25,20 @@ class ParticipanteAdapter(context: Context, private val gerenteFesta: GerenteFes
         }
 
         var valorAPagar = participante.valorGasto - gerenteFesta.getValorIndividual()
+        var itemsComprados: MutableList<String> = mutableListOf()
+        for(item in participante.itensComprados){
+            if(item.descricao != ""){
+                itemsComprados.add(item.descricao)
+            }else{itemsComprados.add("")}
+        }
+
 
         participanteTileView!!.findViewById<TextView>(R.id.nomeTV).setText(participante.nome)
         participanteTileView!!.findViewById<TextView>(R.id.valorTGTV).setText(participante.valorGasto.toString())
         participanteTileView!!.findViewById<TextView>(R.id.valorSFTV).setText(valorAPagar.toString())
+        participanteTileView!!.findViewById<TextView>(R.id.itensCompradosTv).setText(
+            ""+itemsComprados[0]+","+itemsComprados[1]+","+itemsComprados[2]
+        )
 
 
         return participanteTileView
