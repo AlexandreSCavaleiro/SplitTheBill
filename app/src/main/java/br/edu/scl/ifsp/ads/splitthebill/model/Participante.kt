@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Participante (
     var id: Int,
     var nome: String,
-    var itensComprados: String,
+    var itensComprados: MutableList<ItemsComprados> = mutableListOf(),
     var valorGasto: Double
 
 ): Parcelable

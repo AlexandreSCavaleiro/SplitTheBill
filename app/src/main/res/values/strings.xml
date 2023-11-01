@@ -7,4 +7,10 @@
     <string name="valor_gasto">Valor Gasto</string>
     <string name="items_comprados">Items Comprados</string>
     <string name="salvar">Salvar</string>
+    <string name="item_1">Item 1</string>
+    <string name="valor_gasto_no_item_1">Valor Gasto no item 1</string>
+    <string name="item_2">Item 2</string>
+    <string name="valor_gasto_no_item_2">Valor Gasto no item 2</string>
+    <string name="item_3">Item 3</string>
+    <string name="valor_gasto_no_item_3">Valor Gasto no item 3</string>
 </resources>
